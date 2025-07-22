@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weight Converter</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1 class="heading">Weight Converter</h1>
-        <div class="input-container">
-            <label for="pounds">Pounds:</label>
-            <input type="number" id="input" class="input" step=".1" placeholder="Enter number">
-        </div>
-        <p>Your weight in kg is: <span id="result"></span></p>
-        <p class="error" id="error"></p>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app" class="container">
+      <h1 class="heading">Weight Converter</h1>
+      <div class="input-container">
+        <label for="pounds">Pounds:</label>
+        <input type="number" id="input" class="input" step=".1" placeholder="Enter number" v-model.number="form.pounds" />
+      </div>
+    <p>Your weight in kg is: <span id="result">{{ (form.pounds / 2.20462).toFixed(2) }}</span></p>
+      <p class="error" id="error"></p>
     </div>
-</body>
+    <script type="module">
+      import { createApp, reactive } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+      createApp({
+        setup() {
+          const form = reactive({
+            pounds: "",
+          });
+
+          return {
+            form
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
 </html>

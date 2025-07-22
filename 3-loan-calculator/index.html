@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,19 +8,35 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div id="app" class="container">
         <h1>Loan Calculator</h1>
         <p>Loan Amount $
-            <input class="input" type="number" min="1" max="500000">
+            <input class="input" type="number" min="1" max="500000" v-model.number="form.amount">
         </p>
         <p>Interest Rate %
-            <input class="input" type="number" min="0" max="100" step=".1">
+            <input class="input" type="number" min="0" max="100" step=".1" v-model.number="form.interest">
         </p>
         <p>Months to pay
-            <input class="input" type="number" min="6" max="48">
+            <input class="input" type="number" min="6" max="48" v-model.number="form.months">
         </p>
-        <p class="payment">Monthly Payment:</p>
+        <p class="payment">Monthly Payment:{{ (form.amount + ((form.amount * form.interest)/100))/form.months}}</p>
     </div>
+    <script type="module">
+      import { createApp, reactive } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+      createApp({
+        setup() {
+          const form = reactive({
+            amount: 0,
+            interest: 0,
+            months: 0,
+          });
+
+          return {
+            form
+          };
+        },
+      }).mount("#app");
+    </script>
 
 </body>
 </html> 
