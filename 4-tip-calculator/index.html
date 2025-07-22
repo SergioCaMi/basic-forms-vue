@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tip Calculator</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      button:disabled{
+        cursor: not-allowed;
+        background-color: gray;
+      }
+    </style>
   </head>
   <body>
     <div id="app" class="container">
@@ -17,10 +23,10 @@
       <label for="tip">Tip percentage:</label>
       <input type="number" id="tip" v-model.number="form.tip" />
       <br />
-      <button id="calculate" @click="calculate()">Calculate</button>
+      <button id="calculate" @click="calculate()" :disabled="!form.bill | !form.tip">Calculate</button>
       <br />
       <label for="total">Total:</label>
-      <span id="total">{{(form.total).toFixed(2)}}</span>
+      <span id="total">{{form.total}}</span>
     </div>
 
     <script type="module">
@@ -30,11 +36,11 @@
           const form = reactive({
             bill: 0,
             tip: 0,
-            total: 0
+            total: ''
           });
 
           const calculate = () => {
-            form.total = (form.bill + (form.bill * form.tip / 100));
+            form.total = (form.bill + (form.bill * form.tip / 100)).toFixed(2);
           };
 
           return {
